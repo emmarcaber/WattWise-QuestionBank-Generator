@@ -28,5 +28,16 @@ The questions are inside the question_bank folder generated in a JSON file like 
             ],
             "correct_answer": (correct answer here)
         }
+        {
+            "question": (Then another question here),
+            "options": [
+                'A. (option A here)',
+                'B. (option B here)',
+                'C. (option C here)',
+                'D. (option D here)',
+            ],
+            "correct_answer": (correct answer here)
+        },
+        ...
     ]
     
