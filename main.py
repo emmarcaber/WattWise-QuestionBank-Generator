@@ -13,10 +13,12 @@ class App(ttk.Window):
         self.title("WattWise QuestionBank Generator")
         self.state("zoomed")
 
+        # Initialize an empty questions dictionary
         self.questions = {}
 
         self.add_components()
 
+    # Method to add question inside the questions dictionary
     def add_question(self):
         question = self.question_text.get(1.0, "end-1c")
         option_a = self.option_a_entry.get()
@@ -47,11 +49,17 @@ class App(ttk.Window):
             self.preview_text.insert(tk.END, f'Correct Answer: {opts[4]}\n')
             self.preview_text.insert(tk.END, '\n')
 
+
+    # Method when the save button is clicked
     def save_questions(self):
         path = os.path.join(os.getcwd(), f"question_bank\\{self.subject_combobox.get()}.json")
+
+        # IF the json file is already created, proceed to append_json method
         if os.path.exists(path):
             print("File does exist", path)
             self.append_json(path)
+
+        # ELSE, create a new folder and proceed to write_json method
         else:
             os.mkdir("question_bank")
             self.write_json(path)
@@ -59,9 +67,12 @@ class App(ttk.Window):
         self.questions = {}
 
 
+    # Method to append questions in an existing JSON subject question file
     def append_json(self, path):
+
+        # Read the existing JSON file
         with open(path, 'r') as file:
-                data = json.load(file)
+            data = json.load(file)
 
         # Append a new objects to the array
         for q, opts in self.questions.items():
@@ -81,16 +92,17 @@ class App(ttk.Window):
         with open(path, 'w') as file:
             json.dump(data, file, indent=4)
 
-
+    # Method to write questions in a JSON subject question file
     def write_json(self, path):
         print("File does not exist", path)
-        print(self.questions.items())
+        # print(self.questions.items())
         with open(path, 'w+') as f:
-            questions = self.append_questions([])
+            questions = self.format_questions_to_write_in_json([])
             json.dump(questions, f)
 
 
-    def append_questions(self, to_save):
+    # Method to format questions to write in json
+    def format_questions_to_write_in_json(self, to_save):
         return [
             {
                 "question": q,
@@ -105,7 +117,9 @@ class App(ttk.Window):
             for q, opts in self.questions.items()
         ]
 
-    def add_components(self):
+
+    # Method to create the GUI
+    def create_GUI(self):
         # Create the frames
         preview_frame = ttk.Frame(self)
         preview_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -182,5 +196,6 @@ class App(ttk.Window):
         save_button.pack(side=tk.TOP, padx=10, pady=10)
 
 
+# Run the application
 if __name__ == '__main__':
     App().mainloop()
