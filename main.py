@@ -16,7 +16,7 @@ class App(ttk.Window):
         # Initialize an empty questions dictionary
         self.questions = {}
 
-        self.add_components()
+        self.create_GUI()
 
     # Method to add question inside the questions dictionary
     def add_question(self):
