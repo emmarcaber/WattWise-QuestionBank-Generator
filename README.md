@@ -1,7 +1,7 @@
 # WattWise-QuestionBank-Generator
 A Python Program to generate questions in a JSON file for WattWise : Kiosk Test Generator and Checker.
 
-![Main Window](https://i.ibb.co/vDgZ6rp/image.png)
+![Main Window](https://i.ibb.co/Db47kjL/image.png)
 
 ## Usage
 1. __Clone__ the repository.
