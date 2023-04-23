@@ -37,7 +37,6 @@ The questions are inside the question_bank folder generated in a JSON file like 
                 'D. (option D here)',
             ],
             "correct_answer": (correct answer here)
-        },
-        ...
+        }, ...
     ]
     
