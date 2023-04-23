@@ -91,6 +91,8 @@ class App(ttk.Window):
             self.questions = {}
             self.preview_text.delete('1.0', tk.END)
 
+            messagebox.showinfo("Success", "The questions has been saved!")
+
 
 
     # Method to append questions in an existing JSON subject question file
