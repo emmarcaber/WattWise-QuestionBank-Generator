@@ -16,8 +16,7 @@ A Python Program to generate questions in a JSON file for WattWise : Kiosk Test 
 
 ## JSON Question Format
 The questions are inside the question_bank folder generated in a JSON file like this:
-
-    ```
+    
     [
         {
             "question": (The question here),
@@ -30,4 +29,4 @@ The questions are inside the question_bank folder generated in a JSON file like 
             "correct_answer": (correct answer here)
         }
     ]
-    ```
+    
