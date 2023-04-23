@@ -10,7 +10,7 @@ A Python program to generate questions in a JSON file for WattWise : Kiosk Test 
     git clone https://github.com/emmarcaber/WattWise-QuestionBank-Generator.git
     ```
 
-2. Run the command:
+2. __Run__ the command:
 
     ```
     py main.py
