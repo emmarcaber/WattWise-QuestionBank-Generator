@@ -1,3 +1,5 @@
+"""WattWise QuestionBank Generator"""
+
 import json
 import tkinter as tk
 import ttkbootstrap as ttk
