@@ -2,6 +2,7 @@ import json
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap import Style
+from tkinter import messagebox
 import os
 
 
@@ -27,27 +28,33 @@ class App(ttk.Window):
         option_d = self.option_d_entry.get()
         correct_answer = self.correct_answer_combobox.get()
 
-        # Add the question to the dictionary
-        self.questions[question] = [option_a, option_b,
-                                    option_c, option_d, correct_answer]
+        # IF there is one field empty, show an error
+        if question == "" or option_a == "" or option_b == "" or option_c == "" or option_d == "":
+            messagebox.showerror("Error", "Please input all question fields!")
 
-        # Clear the entry fields
-        self.question_text.delete(1.0, tk.END)
-        self.option_a_entry.delete(0, tk.END)
-        self.option_b_entry.delete(0, tk.END)
-        self.option_c_entry.delete(0, tk.END)
-        self.option_d_entry.delete(0, tk.END)
+        # ELSE, proceed to adding question to the preview and question dictionary
+        else: 
+            # Add the question to the dictionary
+            self.questions[question] = [option_a, option_b,
+                                        option_c, option_d, correct_answer]
 
-        # Update the preview textarea
-        self.preview_text.delete('1.0', tk.END)
-        for q, opts in self.questions.items():
-            self.preview_text.insert(tk.END, f'{q}?\n')
-            self.preview_text.insert(tk.END, f'A. {opts[0]}\n')
-            self.preview_text.insert(tk.END, f'B. {opts[1]}\n')
-            self.preview_text.insert(tk.END, f'C. {opts[2]}\n')
-            self.preview_text.insert(tk.END, f'D. {opts[3]}\n')
-            self.preview_text.insert(tk.END, f'Correct Answer: {opts[4]}\n')
-            self.preview_text.insert(tk.END, '\n')
+            # Clear the entry fields
+            self.question_text.delete(1.0, tk.END)
+            self.option_a_entry.delete(0, tk.END)
+            self.option_b_entry.delete(0, tk.END)
+            self.option_c_entry.delete(0, tk.END)
+            self.option_d_entry.delete(0, tk.END)
+
+            # Update the preview textarea
+            self.preview_text.delete('1.0', tk.END)
+            for q, opts in self.questions.items():
+                self.preview_text.insert(tk.END, f'{q}?\n')
+                self.preview_text.insert(tk.END, f'A. {opts[0]}\n')
+                self.preview_text.insert(tk.END, f'B. {opts[1]}\n')
+                self.preview_text.insert(tk.END, f'C. {opts[2]}\n')
+                self.preview_text.insert(tk.END, f'D. {opts[3]}\n')
+                self.preview_text.insert(tk.END, f'Correct Answer: {opts[4]}\n')
+                self.preview_text.insert(tk.END, '\n')
 
 
     # Method when the save button is clicked
@@ -56,15 +63,18 @@ class App(ttk.Window):
 
         # IF the json file is already created, proceed to append_json method
         if os.path.exists(path):
-            print("File does exist", path)
             self.append_json(path)
 
         # ELSE, create a new folder and proceed to write_json method
         else:
-            os.mkdir("question_bank")
+            # Check if the question_bank folder already existed
+            # If not, create the question_bank folder
+            if not os.path.isdir("question_bank"):
+                os.mkdir("question_bank")
             self.write_json(path)
 
         self.questions = {}
+        self.preview_text.delete('1.0', tk.END)
 
 
     # Method to append questions in an existing JSON subject question file
@@ -94,7 +104,6 @@ class App(ttk.Window):
 
     # Method to write questions in a JSON subject question file
     def write_json(self, path):
-        print("File does not exist", path)
         # print(self.questions.items())
         with open(path, 'w+') as f:
             questions = self.format_questions_to_write_in_json([])
