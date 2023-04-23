@@ -152,11 +152,11 @@ class App(ttk.Window):
     # Method to create the GUI
     def create_GUI(self):
         # Create the frames
-        preview_frame = ttk.Frame(self)
-        preview_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-
         fields_frame = ttk.Frame(self)
-        fields_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        fields_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        preview_frame = ttk.Frame(self)
+        preview_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
         # Create the preview textarea
         self.preview_text = ttk.ScrolledText(preview_frame, font=('Arial', 11))
