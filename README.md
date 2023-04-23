@@ -9,13 +9,13 @@ A Python Program to generate questions in a JSON file for WattWise : Kiosk Test 
 1. __Clone__ the repository.
 
     ```
-        git clone https://github.com/emmarcaber/WattWise-QuestionBank-Generator.git
+    git clone https://github.com/emmarcaber/WattWise-QuestionBank-Generator.git
     ```
 
 2. Run the command:
 
     ```
-        py main.py
+    py main.py
     ```
 
 ## JSON Question Format
