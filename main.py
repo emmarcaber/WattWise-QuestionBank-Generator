@@ -71,7 +71,7 @@ class App(ttk.Window):
         # Ask confirmatiion to save the questions
         confirm_to_save = messagebox.askyesno(
             "Confirm Save", 
-            f"Are you sure you want to save the {self.subject_combobox.get()} questions?")
+            f"Are you sure you want to save the new {self.subject_combobox.get()} questions?")
         
         # IF yes, proceed to adding the questions
         if confirm_to_save:
