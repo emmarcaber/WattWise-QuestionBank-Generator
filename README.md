@@ -21,6 +21,7 @@ The questions are inside the question_bank folder generated in a JSON file like 
     
     [
         {
+            "sub-category": "(Sub-category here)",
             "question": (The question here),
             "options": [
                 'A. (option A here)',
@@ -31,6 +32,7 @@ The questions are inside the question_bank folder generated in a JSON file like 
             "correct_answer": (correct answer here)
         }
         {
+            "sub-category": "(Sub-category here)",
             "question": (Then another question here),
             "options": [
                 'A. (option A here)',
