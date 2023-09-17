@@ -33,6 +33,7 @@ class App(ttk.Window):
         option_c = self.option_c_entry.get()
         option_d = self.option_d_entry.get()
         correct_answer = self.correct_answer_combobox.get()
+        sub_category = self.sub_category_combobox.get()
 
         # IF there is one field empty, show an error
         if question == "" or option_a == "" or option_b == "" or option_c == "" or option_d == "":
@@ -41,8 +42,8 @@ class App(ttk.Window):
         # ELSE, proceed to adding question to the preview and question dictionary
         else:
             # Add the question to the dictionary
-            self.questions[question] = [option_a, option_b,
-                                        option_c, option_d, correct_answer]
+            self.questions[question] = [option_a, option_b, option_c, 
+                                        option_d, correct_answer, sub_category]
 
             # Clear the entry fields
             self.question_text.delete(1.0, tk.END)
@@ -54,6 +55,8 @@ class App(ttk.Window):
             # Update the preview textarea
             self.preview_text.delete('1.0', tk.END)
             for q, opts in self.questions.items():
+                self.preview_text.insert(
+                    tk.END, f'Sub-Category: {opts[5]}\n')
                 self.preview_text.insert(tk.END, f'{q}\n')
                 self.preview_text.insert(tk.END, f'A. {opts[0]}\n')
                 self.preview_text.insert(tk.END, f'B. {opts[1]}\n')
@@ -109,6 +112,7 @@ class App(ttk.Window):
         # Append a new objects to the array
         for q, opts in self.questions.items():
             data.append({
+                "sub_category": opts[5],
                 "question": q,
                 "options": [
                     f"A. {opts[0]}",
@@ -116,7 +120,7 @@ class App(ttk.Window):
                     f"C. {opts[2]}",
                     f"D. {opts[3]}",
                 ],
-                "correct_answer": opts[4]
+                "correct_answer": opts[4],
             })
 
         # Write the updated JSON data
@@ -139,6 +143,7 @@ class App(ttk.Window):
     def format_questions_to_write_in_json(self, to_save):
         return [
             {
+                "sub-category": opts[5],
                 "question": q,
                 "options": [
                     f"A. {opts[0]}",
@@ -146,11 +151,61 @@ class App(ttk.Window):
                     f"C. {opts[2]}",
                     f"D. {opts[3]}",
                 ],
-                "correct_answer": opts[4]
+                "correct_answer": opts[4],
             }
             for q, opts in self.questions.items()
         ]
 
+
+    # Method to update sub_category combobox based on the selected general category
+    def update_sub_category_combobox(self, event):
+        selected_sub_category = self.category_combobox.get()
+
+        if selected_sub_category == 'ESAS':
+            self.sub_category_combobox['values'] = [
+                'General Chemistry',
+                'College Physics',
+                'Computer Fundamentals and Programming Engineering',
+                'Materials Engineering Mechanics',
+                'Fluid Mechanics',
+                'Strength of Materials',
+                'Thermodynamics',
+                'Electrical Engineering Law',
+                'Engineering Economics',
+                'Code of Professional Ethics',
+                'Engineering Management Contracts and Specifications',
+                'Philippine Electrical Code Parts 1 and 2',
+            ]
+
+        elif selected_sub_category == "Mathematics":
+            self.sub_category_combobox['values'] = [
+                'Algebra Trigonometry',
+                'Analytical Geometry',
+                'Differential Calculus',
+                'Complex Numbers',
+                'Probability and Statistics Matrices',
+                'Power Series',
+                'Fourier Analysis',
+                'Integral Calculus',
+                'Laplace Transforms',
+            ]
+
+        elif selected_sub_category == "EEPS":
+            self.sub_category_combobox['values'] = [
+                'Electric Circuits Electronic',
+                'Theory and Circuits Energy Conversion',
+                'Power Transmission and Distribution',
+                'Instrumentation and Measurement',
+                'Circuit and Line Protection',
+                'Control System Principles of Communication',
+                'Electrical Machines Electrical Equipment',
+                'Components and Devices',
+                'Electric Systems',
+                'Power Plant',
+                'Electronic Power Equipment',
+                'Illumination',
+                'Building Wiring',
+            ]
 
 
     # Method to create the GUI
@@ -168,6 +223,7 @@ class App(ttk.Window):
 
         # Create category Combobox
         self.selected_category = tk.StringVar()
+        self.selected_sub_category = tk.StringVar()
 
         category_label = ttk.Label(fields_frame, text='Categories:')
         category_label.pack(side=tk.TOP, padx=10, pady=10)
@@ -177,6 +233,15 @@ class App(ttk.Window):
         self.category_combobox['values'] = ('ESAS', 'Mathematics', 'EEPS')
         self.category_combobox.current(0)
         self.category_combobox.pack(side=tk.TOP, padx=10, pady=3)
+        self.category_combobox.bind('<<ComboboxSelected>>', self.update_sub_category_combobox)
+        
+        sub_category_label = ttk.Label(fields_frame, text='Sub-categories:')
+        sub_category_label.pack(side=tk.TOP, padx=10, pady=10)
+
+        self.sub_category_combobox = ttk.Combobox(
+            fields_frame, textvariable=self.selected_sub_category, state='readonly', width=50)
+        self.category_combobox.current(0)
+        self.sub_category_combobox.pack(side=tk.TOP, padx=10, pady=3)
 
         # Create the fields
         question_label = ttk.Label(fields_frame, text='Question:')
